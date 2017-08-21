@@ -59,8 +59,7 @@ RUN git clone https://github.com/tmate-io/tmate-slave.git /code
 WORKDIR /code
 
 
-RUN ./create_keys.sh && \
-    ./autogen.sh && \
+RUN ./autogen.sh && \
     ./configure && \
     make
 
@@ -71,4 +70,9 @@ RUN apt-get remove -y \
         wget unzip cmake
 
 
-ENTRYPOINT ['/code/tmate-slave']
+# don't forget to save these to somewhere.
+# these are needed to configure tmate client.
+RUN /code/create_keys.sh
+
+
+ENTRYPOINT ["/code/tmate-slave"]
